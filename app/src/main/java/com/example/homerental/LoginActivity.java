@@ -1,5 +1,6 @@
 package com.example.homerental;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -27,16 +28,17 @@ public class LoginActivity extends AppCompatActivity {
         btn = findViewById(R.id.buttonLogin);
         tv = findViewById(R.id.textViewNewUser);
 
+        final Database db = new Database(getApplicationContext());
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = edUsername.getText().toString();
                 String password = edPassword.getText().toString();
-                Database db = new Database(getApplicationContext(), "Please fill all details", null, 1);
                 if(username.length()==0 || password.length()==0){
                     Toast.makeText(getApplicationContext(),"Please fill All details", Toast.LENGTH_SHORT).show();
                 }else{
-                    if(db.login(username,password)==1){
+                    if(db.login(username,password)){
                         Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
                         SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
