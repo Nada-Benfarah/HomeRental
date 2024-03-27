@@ -15,5 +15,11 @@
     <color name="colorRed">#C11515</color>
     <color name="purpleDark">#FF210642</color>
     <color name="yellowLight">#fff777</color>
+    <color name="lightBlue">#111E2F</color>
+    <color name="dark_blue">#32357a</color>
+    <color name="light_Blue">#f2f16</color>
+    <color name="light_Blue1">#002f55</color>
+    <color name="light_Blue2">#4D5095</color>
+    #002f55
 
 </resources>
