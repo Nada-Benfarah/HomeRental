@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".HomeActivity">
 
     <ScrollView
@@ -63,7 +65,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/textView77"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
@@ -114,7 +116,7 @@ Here!"
                         android:background="@drawable/cat_background">
 
                         <ImageView
-                            android:id="@+id/imageView9"
+                            android:id="@+id/imageView99"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
@@ -124,7 +126,7 @@ Here!"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/textView11"
+                            android:id="@+id/textView600"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -187,13 +189,13 @@ Here!"
                             android:id="@+id/textView7"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="32dp"
-                            android:layout_marginTop="32dp"
                             android:text="Add your announce"
+                            android:textAlignment="center"
                             android:textColor="@color/colorWhite"
                             android:textSize="20sp"
-                            android:textAlignment="center"
-                            />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -207,7 +209,7 @@ Here!"
                 android:layout_marginTop="24dp">
 
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/textView122"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -217,7 +219,7 @@ Here!"
                     android:textSize="20sp"/>
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/textView133"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -426,7 +428,8 @@ Here!"
             android:src="@drawable/float_icon"
             app:backgroundTint="@color/lightBlue"
             app:maxImageSize="30dp"
-            app:tint="@color/colorWhite" />
+            app:tint="@color/colorWhite"
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

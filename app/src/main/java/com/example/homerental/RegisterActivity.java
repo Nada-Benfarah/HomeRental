@@ -10,12 +10,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class RegisterActivity extends AppCompatActivity {
 
     EditText edUsername, edEmail, edPassword, edConfirm;
     Button btn;
     TextView tv;
 
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
         edConfirm = findViewById(R.id.editTextRegConfirmPassword);
         btn = findViewById(R.id.buttonRegister);
         tv = findViewById(R.id.textViewExistingUser);
+        mAuth = FirebaseAuth.getInstance();
 
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +40,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         btn.setOnClickListener(new View.OnClickListener() {
+
+            createUser();
             @Override
             public void onClick(View v) {
                 String username = edUsername.getText().toString();
