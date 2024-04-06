@@ -8,13 +8,28 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
     EditText edUsername, edEmail, edPassword, edConfirm;
     Button btn;
     TextView tv;
+    boolean valid = true;
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +42,8 @@ public class RegisterActivity extends AppCompatActivity {
         edConfirm = findViewById(R.id.editTextRegConfirmPassword);
         btn = findViewById(R.id.buttonRegister);
         tv = findViewById(R.id.textViewExistingUser);
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,19 +55,43 @@ public class RegisterActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                checkField(edUsername);
+                checkField(edEmail);
+                checkField(edPassword);
+                checkField(edConfirm);
+
                 String username = edUsername.getText().toString();
                 String email = edEmail.getText().toString();
                 String password = edPassword.getText().toString();
                 String confirm = edConfirm.getText().toString();
-                Database db = new Database(getApplicationContext());
-                if (username.length() == 0 || password.length() == 0 || email.length() == 0 || confirm.length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Please fill all details", Toast.LENGTH_SHORT).show();
-                } else {
+                if (valid) {
+
                     if (password.equals(confirm)) {
                         if (isValid(password)) {
-                            db.register(username, email, password);
-                            Toast.makeText(getApplicationContext(), "Record Inserted", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                            fAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    FirebaseUser user = fAuth.getCurrentUser();
+                                    Toast.makeText(getApplicationContext(), "Account Created", Toast.LENGTH_SHORT).show();
+                                    DocumentReference df = fStore.collection("Users").document(user.getUid());
+                                    Map<String,Object> userInfo = new HashMap<>();
+                                    userInfo.put("Username",username);
+                                    userInfo.put("Email",email);
+
+                                    userInfo.put("isUser","1");
+                                    df.set(userInfo);
+
+                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                    finish();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(), "Failed to Create Account", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                         } else {
                             Toast.makeText(getApplicationContext(), "Password must contain at least 8 characters, with letters, digits, and special symbols", Toast.LENGTH_SHORT).show();
                         }
@@ -85,5 +126,17 @@ public class RegisterActivity extends AppCompatActivity {
             }
             return f1 == 1 && f2 == 1 && f3 == 1;
         }
+    }
+
+
+
+    public boolean checkField(EditText textField){
+        if(textField.getText().toString().isEmpty()) {
+            textField.setError("Error");
+            valid = false;
+        }else{
+            valid=true;
+        }
+        return valid;
     }
 }

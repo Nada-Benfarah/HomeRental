@@ -1,53 +1,80 @@
 package com.example.homerental;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class LoginActivity extends AppCompatActivity {
-    EditText edUsername, edPassword;
+    EditText edEmail, edPassword;
     Button btn;
     TextView tv;
-
+    boolean valid = true;
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        edUsername = findViewById(R.id.editTextLoginUsername);
+        edEmail = findViewById(R.id.editTextLoginEmail);
         edPassword = findViewById(R.id.editTextLoginPassword);
         btn = findViewById(R.id.buttonLogin);
         tv = findViewById(R.id.textViewNewUser);
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
-        final Database db = new Database(getApplicationContext());
+
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = edUsername.getText().toString();
+
+                checkField(edEmail);
+                checkField(edPassword);
+
+                String email = edEmail.getText().toString();
                 String password = edPassword.getText().toString();
-                if(username.length()==0 || password.length()==0){
-                    Toast.makeText(getApplicationContext(),"Please fill All details", Toast.LENGTH_SHORT).show();
-                }else{
-                    if(db.login(username,password)){
-                        Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-                        SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("username", username);
-                        editor.apply();
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    }else{
-                        Toast.makeText(getApplicationContext(), "Invalid Username and Password", Toast.LENGTH_SHORT).show();
-                    }
+                if (valid) {
+
+
+                            fAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    Toast.makeText(LoginActivity.this, "Loggedin Successfuly", Toast.LENGTH_SHORT).show();
+                                    checkUserAccessLeval(authResult.getUser().getUid());
+                                   
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(LoginActivity.this, e.getMessage(),  Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                 }
             }
         });
@@ -58,5 +85,47 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         }));
+
+
+
+    }
+
+    private void checkUserAccessLeval(String uid) {
+        DocumentReference df = fStore.collection("Users").document(uid);
+        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Log.d("TAG","onSuccess: " + documentSnapshot.getData());
+
+                if(documentSnapshot.getString("isAdmin") !=null){
+                    startActivity(new Intent(getApplicationContext(),Admin.class));
+                    finish();
+                }
+
+                if(documentSnapshot.getString("isUser") !=null){
+                    startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                    finish();
+                }
+            }
+        });
+    }
+
+    public boolean checkField(EditText textField){
+        if(textField.getText().toString().isEmpty()) {
+            textField.setError("Error");
+            valid = false;
+        }else{
+            valid=true;
+        }
+        return valid;
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(FirebaseAuth.getInstance().getCurrentUser() !=null){
+            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+            finish();
+        }
     }
 }
