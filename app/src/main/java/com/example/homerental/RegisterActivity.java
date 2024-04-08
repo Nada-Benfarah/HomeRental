@@ -132,7 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public boolean checkField(EditText textField){
         if(textField.getText().toString().isEmpty()) {
-            textField.setError("Error");
+            textField.setError("Please fill all details");
             valid = false;
         }else{
             valid=true;
