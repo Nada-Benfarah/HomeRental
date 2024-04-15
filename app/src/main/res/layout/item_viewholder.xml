@@ -31,7 +31,7 @@
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout2">
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/titleTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Title"
@@ -50,9 +50,9 @@
             android:layout_height="70dp"
             android:background="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="@+id/pic"
-            app:layout_constraintBottom_toStartOf="@+id/pic"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints">
 
             <ImageView
                 android:id="@+id/imageView10"
