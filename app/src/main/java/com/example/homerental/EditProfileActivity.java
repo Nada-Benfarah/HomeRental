@@ -51,8 +51,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private boolean isNameChanged() {
         if (!usernameUser.equals(edUsername.getText().toString())) {
-            reference.child(usernameUser).child("name").setValue(edUsername.getText().toString());
             usernameUser = edUsername.getText().toString();
+            reference.child(usernameUser).child("name").setValue(edUsername.getText().toString());
+
             return true;
         } else {
             return false;
@@ -61,8 +62,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private boolean isEmailChanged() {
         if (!emailUser.equals(edEmail.getText().toString())) {
-            reference.child(usernameUser).child("email").setValue(edEmail.getText().toString());
             emailUser = edEmail.getText().toString();
+            reference.child(usernameUser).child("email").setValue(edEmail.getText().toString());
+
             return true;
         } else {
             return false;
@@ -71,8 +73,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private boolean isPasswordChanged() {
         if (!passwordUser.equals(edPassword.getText().toString())) {
-            reference.child(usernameUser).child("password").setValue(edPassword.getText().toString());
             passwordUser = edPassword.getText().toString();
+            reference.child(usernameUser).child("password").setValue(edPassword.getText().toString());
+
             return true;
         } else {
             return false;

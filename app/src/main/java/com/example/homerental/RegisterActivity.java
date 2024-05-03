@@ -82,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     userInfo.put("isUser","1");
                                     df.set(userInfo);
 
-                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                    startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
                                     finish();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
