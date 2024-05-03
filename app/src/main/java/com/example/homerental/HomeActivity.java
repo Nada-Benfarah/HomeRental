@@ -1,8 +1,10 @@
 package com.example.homerental;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import android.widget.TextView;
 
 import com.example.homerental.Activities.DetailActivity;
@@ -18,6 +21,8 @@ import com.example.homerental.Domain.ItemsDomain;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapterPopular, adapterNew;
@@ -31,11 +36,12 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
+
         initRecyclerView();
-        ImageView logout=findViewById(R.id.imageView74);
-        ImageView profil=findViewById(R.id.imageView73);
         ImageView home=findViewById(R.id.imgHome);
         ImageView annonce=findViewById(R.id.imgAnnounce);
+        ImageView logout=findViewById(R.id.imageView74);
+        ImageView profil=findViewById(R.id.imageView73);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,8 +59,12 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, Annonce.class));
 
+                startActivity(new Intent(getApplicationContext(),Parametres.class));
+                finish();
+
             }
         });
+
 
 
         annonce.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +81,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
 //    public void logoutUser(View v){
@@ -86,6 +97,7 @@ public class HomeActivity extends AppCompatActivity {
 //        finish();
 //
 //    }
+
 
 
     private void initRecyclerView(){

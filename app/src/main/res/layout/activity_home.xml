@@ -312,7 +312,10 @@ Here!"
                     android:orientation="vertical">
 
                     <ImageView
+
                         android:id="@+id/imgHome"
+
+
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
@@ -320,7 +323,10 @@ Here!"
                         android:src="@drawable/house" />
 
                     <TextView
+
                         android:id="@+id/txtHome"
+
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Home"
@@ -334,7 +340,9 @@ Here!"
                     android:orientation="vertical">
 
                     <ImageView
+
                         android:id="@+id/imgAnnounce"
+
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
