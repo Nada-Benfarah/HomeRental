@@ -16,6 +16,7 @@
 
 
             android:name=".Annonce"
+
             android:exported="false" />
         <activity
 
