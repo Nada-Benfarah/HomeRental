@@ -61,9 +61,9 @@ public class HomeActivity extends AppCompatActivity {
 
                 startActivity(new Intent(getApplicationContext(),Parametres.class));
                 finish();
-
             }
         });
+
 
 
 
@@ -80,6 +80,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this, HomeActivity.class));
             }
         });
+
 
 
     }

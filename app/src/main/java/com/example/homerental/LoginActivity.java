@@ -77,14 +77,20 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                                     boolean isBlocked = documentSnapshot.getBoolean("isBlocked");
+                                    System.out.println(isBlocked);
+
                                     if (!isBlocked) {
                                         Toast.makeText(LoginActivity.this, "Loggedin Successfuly", Toast.LENGTH_SHORT).show();
                                         checkUserAccessLeval(authResult.getUser().getUid());
                                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                         finish();
                                     } else {
+
                                         //fAuth.signOut();
                                         Toast.makeText(LoginActivity.this, "Your account is blocked. Please contact admin.", Toast.LENGTH_SHORT).show();
+
+                                        Toast.makeText(LoginActivity.this, "Your account is blocked. Please contact admin.", Toast.LENGTH_SHORT).show();
+                                        fAuth.signOut();
                                     }
                                 }
                             });

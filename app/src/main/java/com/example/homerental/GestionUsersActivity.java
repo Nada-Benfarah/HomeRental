@@ -18,10 +18,14 @@ import java.util.ArrayList;
 
 public class GestionUsersActivity extends AppCompatActivity {
 
+
     RecyclerView recyclerViewUsers;
     ArrayList<DocumentSnapshot> userList; // Utilise DocumentSnapshot directement
     UsersAdapter usersAdapter;
     FirebaseFirestore fStore;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
