@@ -17,7 +17,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -88,6 +87,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
 
+
+                                    userInfo.put("isUser","1");
+                                    df.set(userInfo);
+
+                                    startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
                                     finish();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {

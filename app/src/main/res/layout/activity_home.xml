@@ -195,6 +195,8 @@ Here!"
                             android:textSize="20sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
+                            android:onClick="goToAnnonceActivity"
+
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
@@ -314,8 +316,6 @@ Here!"
                     <ImageView
 
                         android:id="@+id/imgHome"
-
-
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
@@ -323,10 +323,7 @@ Here!"
                         android:src="@drawable/house" />
 
                     <TextView
-
                         android:id="@+id/txtHome"
-
-
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Home"
@@ -339,10 +336,10 @@ Here!"
                     android:layout_weight="0.25"
                     android:orientation="vertical">
 
+
+
                     <ImageView
-
                         android:id="@+id/imgAnnounce"
-
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
@@ -354,7 +351,9 @@ Here!"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Announce"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:onClick="goToAllAnnonceActivity"
+                        />
                 </LinearLayout>
 
                 <LinearLayout

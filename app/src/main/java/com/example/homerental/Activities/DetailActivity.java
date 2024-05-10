@@ -1,13 +1,15 @@
 package com.example.homerental.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import com.example.homerental.Annonce;
+
+import com.example.homerental.Annonce1;
 import com.example.homerental.Domain.ItemsDomain;
 import com.example.homerental.HomeActivity;
 import com.example.homerental.LoginActivity;
@@ -16,8 +18,8 @@ import com.example.homerental.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class DetailActivity extends AppCompatActivity {
 
+public class DetailActivity extends AppCompatActivity {
     private TextView titleTxt, addressTxt, bedTxt, bathTxt, wifiTxt, descriptionTxt;
 
     private ItemsDomain item;
@@ -32,6 +34,8 @@ public class DetailActivity extends AppCompatActivity {
 
         initView();
         setVariable();
+
+
 
         ImageView logout=findViewById(R.id.imgLogout);
         ImageView profil=findViewById(R.id.imgProfile);
@@ -63,6 +67,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DetailActivity.this, Annonce.class));
+                startActivity(new Intent(DetailActivity.this, Annonce1.class));
             }
         });
 

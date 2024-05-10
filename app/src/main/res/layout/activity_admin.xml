@@ -90,8 +90,9 @@
                     android:id="@+id/textViewUserManagement"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gestion des Utilisateurs"
+                    android:minHeight="48dp"
                     android:onClick="redirectToUserManagement"
+                    android:text="Gestion des Utilisateurs"
                     android:textColor="@color/colorBlack"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -250,3 +251,5 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

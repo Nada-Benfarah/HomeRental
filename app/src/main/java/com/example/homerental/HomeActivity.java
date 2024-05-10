@@ -10,19 +10,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
-import android.widget.TextView;
-
-import com.example.homerental.Activities.DetailActivity;
 import com.example.homerental.Adapter.ItemsAdapter;
+
 import com.example.homerental.Domain.ItemsDomain;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-
-import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapterPopular, adapterNew;
@@ -42,6 +37,11 @@ public class HomeActivity extends AppCompatActivity {
         ImageView annonce=findViewById(R.id.imgAnnounce);
         ImageView logout=findViewById(R.id.imageView74);
         ImageView profil=findViewById(R.id.imageView73);
+        initRecyclerView();
+        ImageView logout=findViewById(R.id.imageView74);
+        ImageView profil=findViewById(R.id.imageView73);
+        ImageView home=findViewById(R.id.imgHome);
+        ImageView annonce=findViewById(R.id.imgAnnounce);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +61,8 @@ public class HomeActivity extends AppCompatActivity {
 
                 startActivity(new Intent(getApplicationContext(),Parametres.class));
                 finish();
+                startActivity(new Intent(HomeActivity.this, Annonce1.class));
+
             }
         });
 
@@ -71,6 +73,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, Annonce.class));
+        annonce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, Annonce1.class));
             }
         });
 
@@ -84,6 +90,15 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
+    }
+    public void goToAnnonceActivity(View view) {
+        startActivity(new Intent(HomeActivity.this, AnnonceActivity.class));
+    }
+    public void goToAllAnnonceActivity(View view) {
+        startActivity(new Intent(HomeActivity.this, AllAnnoncesActivity.class));
+    }
+
+
 
 //    public void logoutUser(View v){
 //        FirebaseAuth.getInstance().signOut();

@@ -111,6 +111,23 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
 
+
+
+                            fAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    Toast.makeText(LoginActivity.this, "Loggedin Successfuly", Toast.LENGTH_SHORT).show();
+                                    checkUserAccessLeval(authResult.getUser().getUid());
+                                   
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(LoginActivity.this, e.getMessage(),  Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                 }
             }
         });
