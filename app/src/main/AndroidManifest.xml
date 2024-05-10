@@ -18,6 +18,11 @@
             android:exported="false" />
         <activity
 
+
+            android:name=".GestionUsersActivity"
+            android:exported="false" />
+        <activity
+
             android:name=".Activities.DetailActivity"
             android:exported="false" />
         <activity

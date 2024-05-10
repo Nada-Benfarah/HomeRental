@@ -23,7 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-;
+import com.google.firebase.auth.FirebaseUser; // Import manquant
+
 import androidx.appcompat.app.AlertDialog;
 
 
@@ -67,22 +68,34 @@ public class LoginActivity extends AppCompatActivity {
                 String email = edEmail.getText().toString();
                 String password = edPassword.getText().toString();
                 if (valid) {
-
-
-                            fAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    fAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            FirebaseUser user = fAuth.getCurrentUser();
+                            DocumentReference userRef = fStore.collection("Users").document(user.getUid());
+                            userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
-                                public void onSuccess(AuthResult authResult) {
-                                    Toast.makeText(LoginActivity.this, "Loggedin Successfuly", Toast.LENGTH_SHORT).show();
-                                    checkUserAccessLeval(authResult.getUser().getUid());
-                                   
-
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(LoginActivity.this, e.getMessage(),  Toast.LENGTH_SHORT).show();
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    boolean isBlocked = documentSnapshot.getBoolean("isBlocked");
+                                    if (!isBlocked) {
+                                        Toast.makeText(LoginActivity.this, "Loggedin Successfuly", Toast.LENGTH_SHORT).show();
+                                        checkUserAccessLeval(authResult.getUser().getUid());
+                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        finish();
+                                    } else {
+                                        //fAuth.signOut();
+                                        Toast.makeText(LoginActivity.this, "Your account is blocked. Please contact admin.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(LoginActivity.this, e.getMessage(),  Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
                 }
             }

@@ -17,6 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -78,8 +79,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     Map<String,Object> userInfo = new HashMap<>();
                                     userInfo.put("Username",username);
                                     userInfo.put("Email",email);
-
                                     userInfo.put("isUser","1");
+                                    userInfo.put("isBlocked", false);
                                     df.set(userInfo);
 
 
@@ -101,6 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), "Password and Confirm Password didn't match", Toast.LENGTH_SHORT).show();
+
                     }
                 }
             }
