@@ -15,7 +15,7 @@
         <activity
 
 
-            android:name=".Annonce"
+            android:name=".Annonce.AnnonceActivity"
 
             android:exported="false" />
         <activity
@@ -23,7 +23,7 @@
 
             android:name=".GestionUsersActivity"
             android:exported="false" />
-        <activity
+
 
 
         <activity
@@ -59,23 +59,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Annonce.AnnonceActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".Annonce.AllAnnoncesActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
     </application>

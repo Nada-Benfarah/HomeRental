@@ -55,9 +55,6 @@ public class EditProfileActivity extends AppCompatActivity {
             usernameUser = edUsername.getText().toString();
             reference.child(usernameUser).child("name").setValue(edUsername.getText().toString());
 
-        return true;
-            usernameUser = edUsername.getText().toString();
-            reference.child(usernameUser).child("name").setValue(edUsername.getText().toString());
 
             return true;
         } else {
