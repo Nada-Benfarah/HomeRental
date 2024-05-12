@@ -36,7 +36,7 @@ public class AnnonceAdapter extends ArrayAdapter<Annonce> {
         if (listItem == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             Annonce currentAnnonce = mAnnonces.get(position);
-            if (currentAnnonce.getType().equals("Apartement")) {
+            if (currentAnnonce.getType().equals("Apartment")) {
                 listItem = inflater.inflate(R.layout.annonce_item_appartement, parent, false);
             } else if (currentAnnonce.getType().equals("Villa")) {
                 listItem = inflater.inflate(R.layout.annonce_item_villa, parent, false);

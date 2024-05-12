@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,6 +26,8 @@ public class AllAnnoncesActivity extends AppCompatActivity {
     private ListView annoncesListView;
     private List<Annonce> annoncesList;
     private AnnonceAdapter annonceAdapter;
+    private DatabaseReference annoncesRef;
+    private String selectedType = "Tous"; // Type sélectionné par défaut
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +39,35 @@ public class AllAnnoncesActivity extends AppCompatActivity {
         annonceAdapter = new AnnonceAdapter(this, annoncesList);
         annoncesListView.setAdapter(annonceAdapter);
 
+        // Initialiser les boutons de filtrage
+        Button buttonAll = findViewById(R.id.buttonAll);
+        Button buttonAppartement = findViewById(R.id.buttonAppartement);
+        Button buttonVilla = findViewById(R.id.buttonVilla);
+
+        // Ajouter les écouteurs aux boutons de filtrage
+        buttonAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filterByType("Tous");
+            }
+        });
+
+        buttonAppartement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filterByType("Appartement");
+            }
+        });
+
+        buttonVilla.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filterByType("Villa");
+            }
+        });
+
         // Récupérer une référence à la base de données Firebase
-        DatabaseReference annoncesRef = FirebaseDatabase.getInstance().getReference().child("annonces");
+        annoncesRef = FirebaseDatabase.getInstance().getReference().child("annonces");
 
         // Ajouter un écouteur de valeur pour récupérer les annonces
         annoncesRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -46,7 +76,10 @@ public class AllAnnoncesActivity extends AppCompatActivity {
                 annoncesList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Annonce annonce = snapshot.getValue(Annonce.class);
-                    annoncesList.add(annonce);
+                    // Filtrer les annonces en fonction du type sélectionné
+                    if (selectedType.equals("Tous") || annonce.getType().equals(selectedType)) {
+                        annoncesList.add(annonce);
+                    }
                 }
                 annonceAdapter.notifyDataSetChanged();
             }
@@ -60,27 +93,39 @@ public class AllAnnoncesActivity extends AppCompatActivity {
         // Ajouter un écouteur de clic sur les éléments de la liste
         annoncesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Récupérer l'annonce sélectionnée
-              try {
+                Annonce selectedAnnonce = annoncesList.get(position);
+                // Créer une intention pour ouvrir une nouvelle activité
+                Intent intent = new Intent(AllAnnoncesActivity.this, AnnonceDetailsActivity.class);
+                // Ajouter les données de l'annonce sélectionnée à l'intention
+                intent.putExtra("annonce", selectedAnnonce);
+                // Démarrer l'activité
+                startActivity(intent);
+            }
+        });
+    }
 
+    // Méthode pour filtrer les annonces en fonction du type sélectionné
+    private void filterByType(String type) {
+        selectedType = type;
+        // Rafraîchir la liste des annonces en appliquant le filtrage
+        annoncesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                annoncesList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Annonce annonce = snapshot.getValue(Annonce.class);
+                    if (selectedType.equals("Tous") || annonce.getType().equals(selectedType)) {
+                        annoncesList.add(annonce);
+                    }
+                }
+                annonceAdapter.notifyDataSetChanged();
+            }
 
-                  Annonce selectedAnnonce = annoncesList.get(position);
-
-                  // Créer une intention pour ouvrir une nouvelle activité
-                  Intent intent = new Intent(AllAnnoncesActivity.this, AnnonceDetailsActivity.class);
-
-                  // Ajouter les données de l'annonce sélectionnée à l'intention
-                  intent.putExtra("annonce", selectedAnnonce);
-
-                  // Démarrer l'activité
-                  startActivity(intent);
-              }catch (Exception ex){
-                  System.out.println(ex.getMessage());
-                  Toast.makeText(AllAnnoncesActivity.this,ex.getMessage(),Toast.LENGTH_LONG).show();
-              }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Gérer les erreurs de base de données
             }
         });
     }

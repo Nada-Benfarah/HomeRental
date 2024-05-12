@@ -40,9 +40,13 @@ public class HomeActivity extends AppCompatActivity {
                 // Ajoutez l'information sur le layout spécifique à l'Intent en tant qu'extra
                 intent.putExtra("layoutId", R.layout.annonce_item_appartement);
 
+                // Ajoutez le type "appartement" en tant qu'extra
+                intent.putExtra("type", "Apartment");
+
                 // Démarrez AllAnnoncesActivity avec l'Intent configuré
                 startActivity(intent);
             }
+
         });
 
 
