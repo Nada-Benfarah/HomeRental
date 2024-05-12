@@ -108,6 +108,8 @@ Here!"
                     android:orientation="horizontal">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutAppartement"
+
                         android:layout_width="0dp"
                         android:layout_height="70dp"
                         android:layout_marginStart="5dp"

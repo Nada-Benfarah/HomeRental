@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">HomeRental</string>
+    <string-array name="type_options">
+        <item>Appartement</item>
+        <item>Villa</item>
+    </string-array>
 </resources>

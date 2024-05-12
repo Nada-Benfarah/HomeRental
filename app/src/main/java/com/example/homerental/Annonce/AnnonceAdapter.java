@@ -34,7 +34,16 @@ public class AnnonceAdapter extends ArrayAdapter<Annonce> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
         if (listItem == null) {
-            listItem = LayoutInflater.from(mContext).inflate(R.layout.annonce_item, parent, false);
+            LayoutInflater inflater = LayoutInflater.from(mContext);
+            Annonce currentAnnonce = mAnnonces.get(position);
+            if (currentAnnonce.getType().equals("Apartement")) {
+                listItem = inflater.inflate(R.layout.annonce_item_appartement, parent, false);
+            } else if (currentAnnonce.getType().equals("Villa")) {
+                listItem = inflater.inflate(R.layout.annonce_item_villa, parent, false);
+            } else {
+                // Si le type n'est ni Appartement ni Villa, utilisez le layout par défaut
+                listItem = inflater.inflate(R.layout.annonce_item, parent, false);
+            }
         }
 
         Annonce currentAnnonce = mAnnonces.get(position);
@@ -42,8 +51,7 @@ public class AnnonceAdapter extends ArrayAdapter<Annonce> {
         TextView titre = listItem.findViewById(R.id.textViewTitre);
         titre.setText(currentAnnonce.getTitre());
 
-        TextView description = listItem.findViewById(R.id.textViewDescription);
-        description.setText(currentAnnonce.getDescription());
+
 
         TextView localisation = listItem.findViewById(R.id.textViewLocalisation);
         localisation.setText(currentAnnonce.getLocalisation());
@@ -54,11 +62,9 @@ public class AnnonceAdapter extends ArrayAdapter<Annonce> {
         TextView type = listItem.findViewById(R.id.textViewType);
         type.setText(currentAnnonce.getType());
 
-        TextView dateCreation = listItem.findViewById(R.id.textViewDateCreation);
-        dateCreation.setText(currentAnnonce.getDateCreation());
 
-        TextView nombreDePlace = listItem.findViewById(R.id.textViewNombreDePlace);
-        nombreDePlace.setText(currentAnnonce.getNombreDePlace());
+
+
 
         // Load image into ImageView
         ImageView imageView = listItem.findViewById(R.id.imageViewAnnonce);
@@ -82,4 +88,5 @@ public class AnnonceAdapter extends ArrayAdapter<Annonce> {
             return null;
         }
     }
+
 }

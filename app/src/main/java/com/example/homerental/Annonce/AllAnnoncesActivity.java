@@ -1,7 +1,11 @@
 package com.example.homerental.Annonce;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,6 +54,33 @@ public class AllAnnoncesActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Gérer les erreurs de base de données
+            }
+        });
+
+        // Ajouter un écouteur de clic sur les éléments de la liste
+        annoncesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+
+                // Récupérer l'annonce sélectionnée
+              try {
+
+
+                  Annonce selectedAnnonce = annoncesList.get(position);
+
+                  // Créer une intention pour ouvrir une nouvelle activité
+                  Intent intent = new Intent(AllAnnoncesActivity.this, AnnonceDetailsActivity.class);
+
+                  // Ajouter les données de l'annonce sélectionnée à l'intention
+                  intent.putExtra("annonce", selectedAnnonce);
+
+                  // Démarrer l'activité
+                  startActivity(intent);
+              }catch (Exception ex){
+                  System.out.println(ex.getMessage());
+                  Toast.makeText(AllAnnoncesActivity.this,ex.getMessage(),Toast.LENGTH_LONG).show();
+              }
             }
         });
     }

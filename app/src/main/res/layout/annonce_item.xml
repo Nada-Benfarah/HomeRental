@@ -6,11 +6,12 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="10dp"
-    app:cardBackgroundColor="@color/lightBlue">
+    app:cardBackgroundColor="@color/lightBlue"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="437dp"
+        android:layout_height="380dp"
         android:layout_marginBottom="16dp">
 
 
@@ -24,6 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/textViewTitre"
@@ -40,19 +42,6 @@
             app:layout_constraintTop_toTopOf="@+id/imageViewAnnonce" />
 
         <TextView
-            android:id="@+id/textViewDescription"
-            android:layout_width="253dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="192dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.352"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitre" />
-
-        <TextView
             android:id="@+id/textViewLocalisation"
             android:layout_width="253dp"
             android:layout_height="wrap_content"
@@ -61,11 +50,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.394"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDescription"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitre"
             app:layout_constraintTop_toTopOf="@+id/imageViewAnnonce"
-            app:layout_constraintVertical_bias="0.439" />
+            app:layout_constraintVertical_bias="0.534" />
 
         <ImageView
             android:id="@+id/imageView10"
@@ -78,56 +66,54 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prix"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewLocalisation"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
             android:id="@+id/textViewPrix"
             android:layout_width="253dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="8dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.394"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewLocalisation" />
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+        <TextView
+            android:id="@+id/textView123"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewPrix"
+            android:layout_marginTop="16dp"/>
 
         <TextView
             android:id="@+id/textViewType"
             android:layout_width="253dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.394"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPrix" />
+            app:layout_constraintTop_toBottomOf="@+id/textView123" />
 
-        <TextView
-            android:id="@+id/textViewDateCreation"
-            android:layout_width="253dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.394"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewType" />
 
-        <TextView
-            android:id="@+id/textViewNombreDePlace"
-            android:layout_width="253dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.394"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDateCreation" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

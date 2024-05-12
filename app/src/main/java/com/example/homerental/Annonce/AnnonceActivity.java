@@ -7,9 +7,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,7 +32,7 @@ import java.util.Map;
 
 public class AnnonceActivity extends AppCompatActivity {
 
-    EditText titre, description, localisation, prix, type, dateCreation, nombreDePlace;
+    EditText titre, description, localisation, prix, dateCreation, nombreDePlace;
     Button btn, btnChooseImage;
     DatabaseReference annonceRef;
 
@@ -47,7 +49,6 @@ public class AnnonceActivity extends AppCompatActivity {
         description = findViewById(R.id.editTextDescription);
         localisation = findViewById(R.id.editTextLocalisation);
         prix = findViewById(R.id.editTextPrix);
-        type = findViewById(R.id.editTextType);
         dateCreation = findViewById(R.id.editTextDateCreation);
         nombreDePlace = findViewById(R.id.editTextNombreDePlace);
         btn = findViewById(R.id.buttonAdd);
@@ -68,6 +69,12 @@ public class AnnonceActivity extends AppCompatActivity {
                 chooseImage();
             }
         });
+
+        // Set up Spinner for Type
+        Spinner spinnerType = findViewById(R.id.spinnerType);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerType.setAdapter(adapter);
     }
 
     private void chooseImage() {
@@ -96,11 +103,14 @@ public class AnnonceActivity extends AppCompatActivity {
         map.put("description", description.getText().toString());
         map.put("localisation", localisation.getText().toString());
         map.put("prix", prix.getText().toString());
-        map.put("type", type.getText().toString());
         map.put("dateCreation", dateCreation.getText().toString());
         map.put("nombreDePlace", nombreDePlace.getText().toString());
         map.put("isBlocked", true);
 
+        // Get selected type from Spinner
+        Spinner spinnerType = findViewById(R.id.spinnerType);
+        String selectedType = spinnerType.getSelectedItem().toString();
+        map.put("type", selectedType);
 
         // Check if an image is selected
         if (filePath != null) {

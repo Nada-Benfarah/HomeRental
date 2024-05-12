@@ -1,8 +1,13 @@
 package com.example.homerental.Annonce;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Annonce {
+import androidx.annotation.NonNull;
+
+public class Annonce implements Parcelable {
+
     private String titre;
     private String description;
     private String localisation;
@@ -26,6 +31,29 @@ public class Annonce {
         this.nombreDePlace = nombreDePlace;
         this.imageData = imageData;
     }
+
+    protected Annonce(Parcel in) {
+        titre = in.readString();
+        description = in.readString();
+        localisation = in.readString();
+        prix = in.readString();
+        type = in.readString();
+        dateCreation = in.readString();
+        nombreDePlace = in.readString();
+        imageData = in.readString();
+    }
+
+    public static final Creator<Annonce> CREATOR = new Creator<Annonce>() {
+        @Override
+        public Annonce createFromParcel(Parcel in) {
+            return new Annonce(in);
+        }
+
+        @Override
+        public Annonce[] newArray(int size) {
+            return new Annonce[size];
+        }
+    };
 
     // Getters et setters pour chaque champ
     public String getTitre() {
@@ -93,5 +121,22 @@ public class Annonce {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(titre);
+        dest.writeString(description);
+        dest.writeString(localisation);
+        dest.writeString(prix);
+        dest.writeString(type);
+        dest.writeString(dateCreation);
+        dest.writeString(nombreDePlace);
+        dest.writeString(imageData);
+    }
 
 }
