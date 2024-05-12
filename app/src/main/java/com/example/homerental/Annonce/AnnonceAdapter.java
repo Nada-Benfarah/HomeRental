@@ -54,12 +54,6 @@ public class AnnonceAdapter extends ArrayAdapter<Annonce> {
         TextView type = listItem.findViewById(R.id.textViewType);
         type.setText(currentAnnonce.getType());
 
-        TextView dateCreation = listItem.findViewById(R.id.textViewDateCreation);
-        dateCreation.setText(currentAnnonce.getDateCreation());
-
-        TextView nombreDePlace = listItem.findViewById(R.id.textViewNombreDePlace);
-        nombreDePlace.setText(currentAnnonce.getNombreDePlace());
-
         // Load image into ImageView
         ImageView imageView = listItem.findViewById(R.id.imageViewAnnonce);
         Bitmap imageBitmap = decodeBase64ToBitmap(currentAnnonce.getImageData());

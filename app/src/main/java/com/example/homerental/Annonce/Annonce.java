@@ -8,23 +8,69 @@ public class Annonce {
     private String localisation;
     private String prix;
     private String type;
-    private String dateCreation;
-    private String nombreDePlace;
+    private String wifi;
+    private String nbBed;
+    private String nbBath;
+
+
+
     private String imageData; // Cette chaîne contient les données de l'image encodées en base64
 
     // Constructeur par défaut nécessaire pour Firebase
     public Annonce() {}
 
     // Constructeur avec les champs nécessaires
-    public Annonce(String titre, String description, String localisation, String prix, String type, String dateCreation, String nombreDePlace, String imageData) {
+
+
+    public Annonce(String titre, String description, String localisation, String prix, String type, String wifi, String nbBed, String nbBath, String imageData) {
         this.titre = titre;
         this.description = description;
         this.localisation = localisation;
         this.prix = prix;
         this.type = type;
-        this.dateCreation = dateCreation;
-        this.nombreDePlace = nombreDePlace;
+        this.wifi = wifi;
+        this.nbBed = nbBed;
+        this.nbBath = nbBath;
         this.imageData = imageData;
+    }
+
+    @Override
+    public String toString() {
+        return "Annonce{" +
+                "titre='" + titre + '\'' +
+                ", description='" + description + '\'' +
+                ", localisation='" + localisation + '\'' +
+                ", prix='" + prix + '\'' +
+                ", type='" + type + '\'' +
+                ", wifi='" + wifi + '\'' +
+                ", nbBed='" + nbBed + '\'' +
+                ", nbBath='" + nbBath + '\'' +
+                ", imageData='" + imageData + '\'' +
+                '}';
+    }
+
+    public String getWifi() {
+        return wifi;
+    }
+
+    public void setWifi(String wifi) {
+        this.wifi = wifi;
+    }
+
+    public String getNbBed() {
+        return nbBed;
+    }
+
+    public void setNbBed(String nbBed) {
+        this.nbBed = nbBed;
+    }
+
+    public String getNbBath() {
+        return nbBath;
+    }
+
+    public void setNbBath(String nbBath) {
+        this.nbBath = nbBath;
     }
 
     // Getters et setters pour chaque champ
@@ -68,21 +114,6 @@ public class Annonce {
         this.type = type;
     }
 
-    public String getDateCreation() {
-        return dateCreation;
-    }
-
-    public void setDateCreation(String dateCreation) {
-        this.dateCreation = dateCreation;
-    }
-
-    public String getNombreDePlace() {
-        return nombreDePlace;
-    }
-
-    public void setNombreDePlace(String nombreDePlace) {
-        this.nombreDePlace = nombreDePlace;
-    }
 
     public String getImageData() {
         return imageData;

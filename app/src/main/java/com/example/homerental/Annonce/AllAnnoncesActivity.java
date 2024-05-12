@@ -54,3 +54,5 @@ public class AllAnnoncesActivity extends AppCompatActivity {
         });
     }
 }
+
+

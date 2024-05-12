@@ -11,36 +11,106 @@
 
     <!-- EditText for Description -->
 
-    <EditText
-        android:id="@+id/editTextTitre"
-        android:layout_width="322dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="308dp"
-        android:background="@drawable/input_bg"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:hint="Titre"
-        android:inputType="textPersonName"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
+    <CheckBox
+        android:id="@+id/wifi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wifi"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wifi">
+
+        <EditText
+            android:id="@+id/NumBed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:hint="Number of Bed"
+            android:inputType="number"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/input_bg"
+            android:textColorHint="@color/colorWhite" />
+
+        <EditText
+            android:id="@+id/NumBath"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:hint="Number of Bath"
+            android:inputType="number"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/input_bg"
+            android:textColorHint="@color/colorWhite" />
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edPrix">
+
+        <RadioButton
+            android:id="@+id/RbVilla"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Villa"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite" />
+
+        <RadioButton
+            android:id="@+id/RbApartment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Apartment"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite" />
+    </RadioGroup>
+
+    <!-- EditText for Location -->
 
     <EditText
-        android:id="@+id/editTextDescription"
+        android:id="@+id/edTitle"
         android:layout_width="322dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="248dp"
         android:background="@drawable/input_bg"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Description"
+        android:hint="Title"
         android:inputType="textMultiLine"
         android:minLines="3"
         android:paddingLeft="20dp"
@@ -50,12 +120,12 @@
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTitre" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonAdd" />
 
-    <!-- EditText for Location -->
     <EditText
-        android:id="@+id/editTextLocalisation"
+        android:id="@+id/edLocalisation"
         android:layout_width="322dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
@@ -72,19 +142,19 @@
         android:textColorHint="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/edTitle" />
 
     <!-- EditText for Number of Available Places -->
     <EditText
-        android:id="@+id/editTextNombreDePlace"
+        android:id="@+id/edDescription"
         android:layout_width="322dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/input_bg"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Nombre de places disponibles"
-        android:inputType="number"
+        android:hint="Description"
+        android:inputType="text"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
@@ -93,11 +163,11 @@
         android:textColorHint="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextLocalisation" />
+        app:layout_constraintTop_toBottomOf="@+id/edLocalisation" />
 
     <!-- EditText for Price -->
     <EditText
-        android:id="@+id/editTextPrix"
+        android:id="@+id/edPrix"
         android:layout_width="322dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
@@ -114,51 +184,14 @@
         android:textColorHint="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNombreDePlace" />
+        app:layout_constraintTop_toBottomOf="@+id/edDescription" />
 
     <!-- EditText for Type -->
-    <EditText
-        android:id="@+id/editTextType"
-        android:layout_width="322dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/input_bg"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:hint="Type"
-        android:inputType="text"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:textColor="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPrix" />
 
     <!-- EditText for Date of Creation -->
-    <EditText
-        android:id="@+id/editTextDateCreation"
-        android:layout_width="322dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/input_bg"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:hint="Date de Création"
-        android:inputType="text"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:textColor="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextType" />
 
     <!-- Button to Choose an Image -->
+
     <Button
         android:id="@+id/buttonChooseImage"
         android:layout_width="wrap_content"

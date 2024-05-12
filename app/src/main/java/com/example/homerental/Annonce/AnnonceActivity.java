@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,8 +32,12 @@ import java.util.Map;
 
 public class AnnonceActivity extends AppCompatActivity {
 
-    EditText titre, description, localisation, prix, type, dateCreation, nombreDePlace;
+    EditText titre, description, localisation, prix, nbBed, nbBath;
     Button btn, btnChooseImage;
+
+    RadioButton rbVilla, rbApartment;
+
+    CheckBox rbWifi;
     DatabaseReference annonceRef;
 
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -43,14 +49,16 @@ public class AnnonceActivity extends AppCompatActivity {
         setContentView(R.layout.immmeuble_item);
 
         // Initialize views
-        titre = findViewById(R.id.editTextTitre);
-        description = findViewById(R.id.editTextDescription);
-        localisation = findViewById(R.id.editTextLocalisation);
-        prix = findViewById(R.id.editTextPrix);
-        type = findViewById(R.id.editTextType);
-        dateCreation = findViewById(R.id.editTextDateCreation);
-        nombreDePlace = findViewById(R.id.editTextNombreDePlace);
+        titre = findViewById(R.id.edTitle);
+        description = findViewById(R.id.edDescription);
+        localisation = findViewById(R.id.edLocalisation);
+        prix = findViewById(R.id.edPrix);
+        nbBed = findViewById(R.id.NumBed);
+        nbBath = findViewById(R.id.NumBath);
         btn = findViewById(R.id.buttonAdd);
+        rbVilla = findViewById(R.id.RbVilla);
+        rbApartment = findViewById(R.id.RbApartment);
+        rbWifi = findViewById(R.id.wifi);
         btnChooseImage = findViewById(R.id.buttonChooseImage);
 
         // Set listener for the add button
@@ -96,10 +104,22 @@ public class AnnonceActivity extends AppCompatActivity {
         map.put("description", description.getText().toString());
         map.put("localisation", localisation.getText().toString());
         map.put("prix", prix.getText().toString());
-        map.put("type", type.getText().toString());
-        map.put("dateCreation", dateCreation.getText().toString());
-        map.put("nombreDePlace", nombreDePlace.getText().toString());
-        map.put("isBlocked", true);
+        map.put("nbBed", nbBed.getText().toString());
+        map.put("nbBath", nbBath.getText().toString());
+
+
+        if (rbApartment.isChecked()){
+            map.put("type","Apartment");
+        }else{
+            map.put("type","Villa");
+        }
+
+        if(rbWifi.isChecked()){
+            map.put("wifi","true");
+        }else{
+            map.put("wifi","false");
+        }
+
 
 
         // Check if an image is selected

@@ -1,5 +1,6 @@
 package com.example.homerental;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,13 +20,19 @@ import com.example.homerental.Annonce.Annonce;
 import com.example.homerental.Annonce.AnnonceActivity;
 import com.example.homerental.Domain.ItemsDomain;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapterPopular, adapterNew;
     private RecyclerView recyclerViewPopular, recyclerViewNew;
-
 
 
     @Override
@@ -34,16 +41,16 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         initRecyclerView();
-        ImageView logout=findViewById(R.id.imageView74);
-        ImageView profil=findViewById(R.id.imageView73);
-        ImageView home=findViewById(R.id.imgHome);
-        ImageView annonce=findViewById(R.id.imgAnnounce);
+        ImageView logout = findViewById(R.id.imageView74);
+        ImageView profil = findViewById(R.id.imageView73);
+        ImageView home = findViewById(R.id.imgHome);
+        ImageView annonce = findViewById(R.id.imgAnnounce);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
 
             }
@@ -55,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, Annonce.class));
 
-                startActivity(new Intent(getApplicationContext(),Parametres.class));
+                startActivity(new Intent(getApplicationContext(), Parametres.class));
                 finish();
                 startActivity(new Intent(HomeActivity.this, Annonce1.class));
 
@@ -63,59 +70,63 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+        annonce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, AllAnnoncesActivity.class));
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+            }
+        });
 
 
+    }
 
-                annonce.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(HomeActivity.this, AllAnnoncesActivity.class));
+    public void goToAnnonceActivity(View view) {
+        startActivity(new Intent(HomeActivity.this, AnnonceActivity.class));
+    }
+
+
+    private void initRecyclerView() {
+
+        DatabaseReference annoncesRef = FirebaseDatabase.getInstance().getReference().child("annonces");
+
+        ArrayList<ItemsDomain> annoncesList = new ArrayList<>();
+        annoncesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                annoncesList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Annonce annonce = snapshot.getValue(Annonce.class);
+                    try{
+                        System.out.println(annonce);
+                        int nbBed = Integer.parseInt(annonce.getNbBed());
+                        int nbBath = Integer.parseInt(annonce.getNbBath());
+                        int prix = (int )Double.parseDouble(annonce.getPrix());
+                        boolean wifi = Boolean.getBoolean(annonce.getWifi());
+                        annoncesList.add(new ItemsDomain(annonce.getTitre(), annonce.getLocalisation(), annonce.getDescription(), nbBed
+                                , nbBath, prix, annonce.getImageData()
+                                , wifi ));
+                    }catch (Exception e) {
+
                     }
-                });
 
-                home.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(HomeActivity.this, HomeActivity.class));
-                    }
-                });
+                }
+                adapterNew.notifyDataSetChanged();
+                adapterPopular.notifyDataSetChanged();
 
 
             }
-
-            public void goToAnnonceActivity(View view) {
-                startActivity(new Intent(HomeActivity.this, AnnonceActivity.class));
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Gérer les erreurs de base de données
             }
-
-
-            private void initRecyclerView() {
-                ArrayList<ItemsDomain> ItemsArraylist = new ArrayList<>();
-
-                ItemsArraylist.add(new ItemsDomain("House with a great view", "san francisco, ca 9410", "This 2 bed /1 bath home boasts an enormous,\n" +
-                        "open-living plan, accented by striking \n" +
-                        "architectural features and high-end finishes .\n" +
-                        "feel inspired by open sight lines that \n+" +
-                        "cofferes cellings", 2, 1, 841456, "pic1", true));
-
-                ItemsArraylist.add(new ItemsDomain("House with a great view", "san francisco, ca 9410", "This 2 bed /1 bath home boasts an enormous,\n" +
-                        "open-living plan, accented by striking \n" +
-                        "architectural features and high-end finishes .\n" +
-                        "feel inspired by open sight lines that \n+" +
-                        "cofferes cellings", 2, 1, 841456, "pic1", true));
-
-
-                ItemsArraylist.add(new ItemsDomain("House with a great view", "san francisco, ca 9410", "This 2 bed /1 bath home boasts an enormous,\n" +
-                        "open-living plan, accented by striking \n" +
-                        "architectural features and high-end finishes .\n" +
-                        "feel inspired by open sight lines that \n+" +
-                        "cofferes cellings", 2, 1, 841456, "pic1", true));
-
-
-                ItemsArraylist.add(new ItemsDomain("House with a great view", "san francisco, ca 9410", "This 2 bed /1 bath home boasts an enormous,\n" +
-                        "open-living plan, accented by striking \n" +
-                        "architectural features and high-end finishes .\n" +
-                        "feel inspired by open sight lines that \n+" +
-                        "cofferes cellings", 2, 1, 841456, "pic1", true));
+        });
 
 
                 recyclerViewPopular = findViewById(R.id.viewPupolar);
@@ -124,8 +135,8 @@ public class HomeActivity extends AppCompatActivity {
                 recyclerViewPopular.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
                 recyclerViewNew.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
 
-                adapterNew = new ItemsAdapter(ItemsArraylist);
-                adapterPopular = new ItemsAdapter(ItemsArraylist);
+                adapterNew = new ItemsAdapter(annoncesList);
+                adapterPopular = new ItemsAdapter(annoncesList);
 
                 recyclerViewNew.setAdapter(adapterNew);
                 recyclerViewPopular.setAdapter(adapterPopular);
