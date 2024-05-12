@@ -76,7 +76,7 @@
         android:layout_marginRight="45dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edPrix">
+        app:layout_constraintTop_toBottomOf="@+id/phone">
 
         <RadioButton
             android:id="@+id/RbVilla"
@@ -185,6 +185,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edDescription" />
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="322dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/input_bg"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:hint="Phone"
+        android:inputType="text"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edPrix" />
 
     <!-- EditText for Type -->
 

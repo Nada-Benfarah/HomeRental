@@ -2,6 +2,9 @@ package com.example.homerental.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.homerental.Activities.DetailActivity;
+import com.example.homerental.Activities.StaticVariables;
+import com.example.homerental.Annonce.Annonce;
 import com.example.homerental.Domain.ItemsDomain;
 import com.example.homerental.R;
 
@@ -21,13 +26,13 @@ import java.util.ArrayList;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
 
-    ArrayList<ItemsDomain> items;
+    ArrayList<Annonce> items;
     DecimalFormat formatter;
     Context context;
 
-    public ItemsAdapter(ArrayList<ItemsDomain> items) {
+    public ItemsAdapter(ArrayList<Annonce> items) {
         this.items = items;
-        formatter=new DecimalFormat("###,###,###,##");
+        formatter=new DecimalFormat("###,###,###,###.00");
     }
 
 
@@ -42,19 +47,22 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ItemsAdapter.ViewHolder holder, int position) {
-        holder.titleTxt.setText(items.get(position).getTitle());
-        holder.addressTxt.setText(items.get(position).getAddress());
-        holder.priceTxt.setText("$"+formatter.format(items.get(position).getPrice()));
+        holder.titleTxt.setText(items.get(position).getTitre());
+        holder.addressTxt.setText(items.get(position).getLocalisation());
+        holder.priceTxt.setText(String.format("%s DT", formatter.format(items.get(position).getPrix())));
 
-        int drawableResourceId=holder.itemView.getResources().getIdentifier(items.get(position).getPic(),"drawable",holder.itemView.getContext().getPackageName());
+        int drawableResourceId=holder.itemView.getResources().getIdentifier(items.get(position).getImageData(),"drawable",holder.itemView.getContext().getPackageName());
 
-        Glide.with(holder.itemView.getContext())
-                .load(drawableResourceId)
-                .into(holder.pic);
+//        Glide.with(holder.itemView.getContext())
+//                .load(drawableResourceId)
+//                .into(holder.pic);
+
+        Bitmap imageBitmap = decodeBase64ToBitmap(items.get(position).getImageData());
+        holder.pic.setImageBitmap(imageBitmap);
 
         holder.itemView.setOnClickListener (v->{
             Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra("object",items.get(position));
+            StaticVariables.selectedAnnonce = items.get(position);
             context.startActivity(intent);
 
         });
@@ -77,6 +85,16 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             priceTxt=itemView.findViewById(R.id.priceTxt);
             pic=itemView.findViewById(R.id.pic);
 
+        }
+    }
+
+    private Bitmap decodeBase64ToBitmap(String base64String) {
+        try {
+            byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

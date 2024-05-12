@@ -49,7 +49,7 @@ public class AnnonceAdapter extends ArrayAdapter<Annonce> {
         localisation.setText(currentAnnonce.getLocalisation());
 
         TextView prix = listItem.findViewById(R.id.textViewPrix);
-        prix.setText(currentAnnonce.getPrix());
+        prix.setText(String.valueOf(currentAnnonce.getPrix()));
 
         TextView type = listItem.findViewById(R.id.textViewType);
         type.setText(currentAnnonce.getType());

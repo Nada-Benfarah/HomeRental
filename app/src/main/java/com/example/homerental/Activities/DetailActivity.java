@@ -1,9 +1,14 @@
 package com.example.homerental.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,13 +22,18 @@ import com.example.homerental.LoginActivity;
 import com.example.homerental.Parametres;
 import com.example.homerental.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 
 
 public class DetailActivity extends AppCompatActivity {
     private TextView titleTxt, addressTxt, bedTxt, bathTxt, wifiTxt, descriptionTxt;
 
-    private ItemsDomain item;
     private ImageView pic;
 
 
@@ -34,8 +44,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         initView();
-        setVariable();
-
+        setVariable(StaticVariables.selectedAnnonce);
 
 
         ImageView logout=findViewById(R.id.imgLogout);
@@ -59,7 +68,6 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     startActivity(new Intent(DetailActivity.this, Parametres.class));
-
             }
         });
 
@@ -81,12 +89,12 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    private void setVariable(){
-        item=(ItemsDomain) getIntent().getSerializableExtra("object");
-        titleTxt.setText(item.getTitle());
-        addressTxt.setText(item.getAddress());
-        bedTxt.setText(item.getBed()+"Bed");
-        bathTxt.setText(item.getBath()+"Bath");
+    @SuppressLint("DefaultLocale")
+    private void setVariable(Annonce item){
+        titleTxt.setText(item.getTitre());
+        addressTxt.setText(item.getLocalisation());
+        bedTxt.setText(String.format("%d Bed", item.getNbBed()));
+        bathTxt.setText(String.format("%d Bath", item.getNbBath()));
         descriptionTxt.setText(item.getDescription());
 
         if(item.isWifi()){
@@ -94,11 +102,9 @@ public class DetailActivity extends AppCompatActivity {
         }else{
             wifiTxt.setText("No-wifi");
         }
-        int drawableResourceId=getResources().getIdentifier(item.getPic(),"drawable", getPackageName());
 
-        Glide.with(this)
-                .load(drawableResourceId)
-                .into(pic);
+        Bitmap imageBitmap = decodeBase64ToBitmap(item.getImageData());
+        pic.setImageBitmap(imageBitmap);
     }
     private void initView(){
         titleTxt=findViewById(R.id.textView9);
@@ -109,5 +115,15 @@ public class DetailActivity extends AppCompatActivity {
         descriptionTxt=findViewById(R.id.textView12);
         pic=findViewById(R.id.pic);
 
+    }
+
+    private Bitmap decodeBase64ToBitmap(String base64String) {
+        try {
+            byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

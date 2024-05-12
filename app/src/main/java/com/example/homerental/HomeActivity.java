@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
-    private RecyclerView.Adapter adapterPopular, adapterNew;
-    private RecyclerView recyclerViewPopular, recyclerViewNew;
+    private RecyclerView.Adapter adapterPopular;
+    private RecyclerView recyclerViewPopular;
 
 
     @Override
@@ -63,6 +63,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this, Annonce.class));
 
                 startActivity(new Intent(getApplicationContext(), Parametres.class));
+
                 finish();
                 startActivity(new Intent(HomeActivity.this, Annonce1.class));
 
@@ -96,28 +97,21 @@ public class HomeActivity extends AppCompatActivity {
 
         DatabaseReference annoncesRef = FirebaseDatabase.getInstance().getReference().child("annonces");
 
-        ArrayList<ItemsDomain> annoncesList = new ArrayList<>();
+        ArrayList<Annonce> annoncesList = new ArrayList<>();
         annoncesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 annoncesList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Annonce annonce = snapshot.getValue(Annonce.class);
+                    annonce.setId(snapshot.getKey());
                     try{
-                        System.out.println(annonce);
-                        int nbBed = Integer.parseInt(annonce.getNbBed());
-                        int nbBath = Integer.parseInt(annonce.getNbBath());
-                        int prix = (int )Double.parseDouble(annonce.getPrix());
-                        boolean wifi = Boolean.getBoolean(annonce.getWifi());
-                        annoncesList.add(new ItemsDomain(annonce.getTitre(), annonce.getLocalisation(), annonce.getDescription(), nbBed
-                                , nbBath, prix, annonce.getImageData()
-                                , wifi ));
+                        annoncesList.add(annonce);
                     }catch (Exception e) {
 
                     }
 
                 }
-                adapterNew.notifyDataSetChanged();
                 adapterPopular.notifyDataSetChanged();
 
 
@@ -130,15 +124,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
                 recyclerViewPopular = findViewById(R.id.viewPupolar);
-                recyclerViewNew = findViewById(R.id.viewNew);
 
                 recyclerViewPopular.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                recyclerViewNew.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
 
-                adapterNew = new ItemsAdapter(annoncesList);
                 adapterPopular = new ItemsAdapter(annoncesList);
 
-                recyclerViewNew.setAdapter(adapterNew);
                 recyclerViewPopular.setAdapter(adapterPopular);
 
 

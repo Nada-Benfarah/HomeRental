@@ -32,7 +32,7 @@ import java.util.Map;
 
 public class AnnonceActivity extends AppCompatActivity {
 
-    EditText titre, description, localisation, prix, nbBed, nbBath;
+    EditText titre, description, localisation, prix, nbBed, nbBath, phone;
     Button btn, btnChooseImage;
 
     RadioButton rbVilla, rbApartment;
@@ -42,6 +42,8 @@ public class AnnonceActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri filePath;
+
+    private boolean adding = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class AnnonceActivity extends AppCompatActivity {
         localisation = findViewById(R.id.edLocalisation);
         prix = findViewById(R.id.edPrix);
         nbBed = findViewById(R.id.NumBed);
+        phone = findViewById(R.id.phone);
         nbBath = findViewById(R.id.NumBath);
         btn = findViewById(R.id.buttonAdd);
         rbVilla = findViewById(R.id.RbVilla);
@@ -99,14 +102,31 @@ public class AnnonceActivity extends AppCompatActivity {
     }
 
     private void insertData() {
+        if(adding) return;
+
+        if(titre.getText().toString().isEmpty() ||
+                description.getText().toString().isEmpty() ||
+                localisation.getText().toString().isEmpty() ||
+                prix.getText().toString().isEmpty() ||
+                nbBath.getText().toString().isEmpty() ||
+                nbBed.getText().toString().isEmpty() ||
+                phone.getText().toString().isEmpty() ||
+                filePath == null
+        ) {
+            Toast.makeText(getApplicationContext(), "you need to complete infomaions ", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        adding = true;
+
         Map<String,Object> map = new HashMap<>();
         map.put("titre", titre.getText().toString());
         map.put("description", description.getText().toString());
         map.put("localisation", localisation.getText().toString());
-        map.put("prix", prix.getText().toString());
-        map.put("nbBed", nbBed.getText().toString());
-        map.put("nbBath", nbBath.getText().toString());
-
+        map.put("prix", Double.parseDouble(prix.getText().toString()));
+        map.put("nbBed", Integer.parseInt(nbBed.getText().toString()));
+        map.put("nbBath", Integer.parseInt(nbBath.getText().toString()));
+        map.put("phone", phone.getText().toString());
 
         if (rbApartment.isChecked()){
             map.put("type","Apartment");
@@ -114,49 +134,56 @@ public class AnnonceActivity extends AppCompatActivity {
             map.put("type","Villa");
         }
 
-        if(rbWifi.isChecked()){
-            map.put("wifi","true");
-        }else{
-            map.put("wifi","false");
+        map.put("wifi",rbWifi.isChecked());
+
+
+        try {
+            // Convert image URI to base64 string
+            InputStream inputStream = getContentResolver().openInputStream(filePath);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] imageData = baos.toByteArray();
+            String base64Image = Base64.encodeToString(imageData, Base64.DEFAULT);
+
+            // Store base64 image string in the Realtime Database
+            map.put("imageData", base64Image);
+
+            // Save the data to Realtime Database
+            FirebaseDatabase.getInstance().getReference().child("annonces").push()
+                    .setValue(map)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            adding = false;
+                            AnnonceActivity.this.clearData();
+                            Toast.makeText(AnnonceActivity.this,"Data inserted successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            adding = false;
+                            Toast.makeText(AnnonceActivity.this,"Error while inserting",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } catch (FileNotFoundException e) {
+            adding = false;
+            e.printStackTrace();
+            Toast.makeText(this, "File not found", Toast.LENGTH_SHORT).show();
         }
+    }
 
-
-
-        // Check if an image is selected
-        if (filePath != null) {
-            try {
-                // Convert image URI to base64 string
-                InputStream inputStream = getContentResolver().openInputStream(filePath);
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] imageData = baos.toByteArray();
-                String base64Image = Base64.encodeToString(imageData, Base64.DEFAULT);
-
-                // Store base64 image string in the Realtime Database
-                map.put("imageData", base64Image);
-
-                // Save the data to Realtime Database
-                FirebaseDatabase.getInstance().getReference().child("annonces").push()
-                        .setValue(map)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(AnnonceActivity.this,"Data inserted successfully", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(AnnonceActivity.this,"Error while inserting",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                Toast.makeText(this, "File not found", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(this, "Veuillez sélectionner une image", Toast.LENGTH_SHORT).show();
-        }
+    private void clearData(){
+        this.filePath = null;
+        this.titre.setText("");
+        this.description.setText("");
+        this.localisation.setText("");
+        this.prix.setText("");
+        this.rbWifi.setChecked(false);
+        this.rbVilla.setChecked(true);
+        this.nbBed.setText("");
+        this.nbBath.setText("");
+        this.phone.setText("");
     }
 }
