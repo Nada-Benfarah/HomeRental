@@ -1,19 +1,16 @@
 package com.example.homerental.Activities;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
-
 import com.example.homerental.Annonce.Annonce;
 import com.example.homerental.Annonce1;
 import com.example.homerental.Domain.ItemsDomain;

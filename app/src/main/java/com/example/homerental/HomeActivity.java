@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.homerental.Adapter.ItemsAdapter;
 
@@ -19,20 +20,26 @@ import com.example.homerental.Annonce.AllAnnoncesActivity;
 import com.example.homerental.Annonce.Annonce;
 import com.example.homerental.Annonce.AnnonceActivity;
 import com.example.homerental.Domain.ItemsDomain;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+
 
 public class HomeActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapterPopular;
     private RecyclerView recyclerViewPopular;
+
+    TextView nameUser;
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
 
 
     @Override
@@ -45,6 +52,19 @@ public class HomeActivity extends AppCompatActivity {
         ImageView profil = findViewById(R.id.imageView73);
         ImageView home = findViewById(R.id.imgHome);
         ImageView annonce = findViewById(R.id.imgAnnounce);
+        TextView nameUser = findViewById(R.id.textView6);
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+
+
+        fStore.collection("Users").document(fAuth.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                nameUser.setText("Hi, "+documentSnapshot.getString("Username"));
+
+            }
+        });
+
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,13 +80,10 @@ public class HomeActivity extends AppCompatActivity {
         profil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, Annonce.class));
 
                 startActivity(new Intent(getApplicationContext(), Parametres.class));
 
                 finish();
-                startActivity(new Intent(HomeActivity.this, Annonce1.class));
-
             }
         });
 
@@ -75,6 +92,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, AllAnnoncesActivity.class));
+                finish();
             }
         });
 

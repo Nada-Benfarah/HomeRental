@@ -8,10 +8,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.arch.core.executor.ArchTaskExecutor;
+
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -22,6 +30,7 @@ public class EditProfileActivity extends AppCompatActivity {
     DatabaseReference reference;
     String emailUser, usernameUser, passwordUser;
 
+    FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,95 +42,39 @@ public class EditProfileActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.buttonSave);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
+        user= fAuth.getCurrentUser();
 
         showData();
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isNameChanged() || isPasswordChanged() || isEmailChanged()) {
-                    Toast.makeText(EditProfileActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(EditProfileActivity.this, "No Changes Found", Toast.LENGTH_SHORT).show();
-                }
+                Map<String,Object> userInfo = new HashMap<>();
+                userInfo.put("Username",edUsername.getText().toString());
+                userInfo.put("Email",edEmail.getText().toString());
+                fStore.collection("Users").document(fAuth.getUid()).update(userInfo).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(getApplicationContext(),"Data Changed",Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            }
+        });
+
+
+
+    }
+
+    public void showData() {
+
+      fStore.collection("Users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                edUsername.setText(documentSnapshot.getString("Username"));
+                edEmail.setText(documentSnapshot.getString("Email"));
             }
         });
 
     }
 
-
-    private boolean isNameChanged() {
-        if (!usernameUser.equals(edUsername.getText().toString())) {
-
-            usernameUser = edUsername.getText().toString();
-            reference.child(usernameUser).child("name").setValue(edUsername.getText().toString());
-
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean isEmailChanged() {
-        if (!emailUser.equals(edEmail.getText().toString())) {
-
-            emailUser = edEmail.getText().toString();
-            reference.child(usernameUser).child("email").setValue(edEmail.getText().toString());
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean isPasswordChanged() {
-        if (!passwordUser.equals(edPassword.getText().toString())) {
-
-            passwordUser = edPassword.getText().toString();
-            reference.child(usernameUser).child("password").setValue(edPassword.getText().toString());
-
-
-            passwordUser = edPassword.getText().toString();
-            reference.child(usernameUser).child("password").setValue(edPassword.getText().toString());
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void showData() {
-        Intent intent = getIntent();
-        usernameUser = intent.getStringExtra("username");
-        emailUser = intent.getStringExtra("email");
-        passwordUser = intent.getStringExtra("password");
-        edUsername.setText(usernameUser);
-        edEmail.setText(emailUser);
-        edPassword.setText(passwordUser);
-    }
-
-    public static boolean isValid(String passwordhere) {
-        int f1 = 0, f2 = 0, f3 = 0;
-        if (passwordhere.length() < 8) {
-            return false;
-        } else {
-            for (int p = 0; p < passwordhere.length(); p++) {
-                if (Character.isLetter(passwordhere.charAt(p))) {
-                    f1 = 1;
-                }
-            }
-            for (int r = 0; r < passwordhere.length(); r++) {
-                if (Character.isDigit(passwordhere.charAt(r))) {
-                    f2 = 1;
-                }
-            }
-            for (int s = 0; s < passwordhere.length(); s++) {
-                char c = passwordhere.charAt(s);
-                if (c >= 33 && c <= 46 || c == 64) {
-                    f3 = 1;
-                }
-            }
-            return f1 == 1 && f2 == 1 && f3 == 1;
-        }
-    }
 }

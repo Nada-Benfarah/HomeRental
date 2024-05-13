@@ -24,6 +24,7 @@ import com.example.homerental.R;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
 
     ArrayList<Annonce> items;
@@ -51,14 +52,17 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         holder.addressTxt.setText(items.get(position).getLocalisation());
         holder.priceTxt.setText(String.format("%s DT", formatter.format(items.get(position).getPrix())));
 
-        int drawableResourceId=holder.itemView.getResources().getIdentifier(items.get(position).getImageData(),"drawable",holder.itemView.getContext().getPackageName());
 
-//        Glide.with(holder.itemView.getContext())
-//                .load(drawableResourceId)
-//                .into(holder.pic);
 
-        Bitmap imageBitmap = decodeBase64ToBitmap(items.get(position).getImageData());
-        holder.pic.setImageBitmap(imageBitmap);
+
+        Glide.with(holder.itemView.getContext())
+                .load(Base64.decode(items.get(position).getImageData(),0))
+                .into(holder.pic);
+
+
+
+
+
 
         holder.itemView.setOnClickListener (v->{
             Intent intent = new Intent(context, DetailActivity.class);
@@ -85,16 +89,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             priceTxt=itemView.findViewById(R.id.priceTxt);
             pic=itemView.findViewById(R.id.pic);
 
-        }
-    }
-
-    private Bitmap decodeBase64ToBitmap(String base64String) {
-        try {
-            byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
-            return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
 }

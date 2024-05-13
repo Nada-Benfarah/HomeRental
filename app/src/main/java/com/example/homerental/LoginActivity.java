@@ -144,6 +144,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+
+                //convert from xml to view object (classe java)
                 View dialogView = getLayoutInflater().inflate(R.layout.dialog_forgot, null);
                 EditText emailBox = dialogView.findViewById(R.id.emailBox);
                 builder.setView(dialogView);

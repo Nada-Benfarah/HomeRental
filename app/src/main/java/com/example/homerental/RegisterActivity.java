@@ -72,26 +72,19 @@ public class RegisterActivity extends AppCompatActivity {
                             fAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
+                                    //FirebaseUser user = authResult.getUser();
                                     FirebaseUser user = fAuth.getCurrentUser();
                                     Toast.makeText(getApplicationContext(), "Account Created", Toast.LENGTH_SHORT).show();
                                     DocumentReference df = fStore.collection("Users").document(user.getUid());
+                                    //update lil les infos mta3 user(mail wil usernam) w zadhom des infos okhrin w hathom fi hashmap jdida
                                     Map<String,Object> userInfo = new HashMap<>();
                                     userInfo.put("Username",username);
                                     userInfo.put("Email",email);
                                     userInfo.put("isUser","1");
                                     userInfo.put("isBlocked", false);
                                     df.set(userInfo);
-
-
                                     startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
 
-                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-
-
-                                    userInfo.put("isUser","1");
-                                    df.set(userInfo);
-
-                                    startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
                                     finish();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
