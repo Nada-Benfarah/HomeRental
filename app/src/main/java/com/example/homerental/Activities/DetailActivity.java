@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 
 public class DetailActivity extends AppCompatActivity {
-    private TextView titleTxt, addressTxt, bedTxt, bathTxt, wifiTxt, descriptionTxt;
+    private TextView titleTxt, addressTxt, bedTxt, bathTxt, wifiTxt, descriptionTxt,prix,phone;
 
     private ImageView pic;
 
@@ -44,76 +44,48 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         initView();
-        setVariable(StaticVariables.selectedAnnonce);
+        if (StaticVariables.selectedAnnonce != null) {
+            setVariable(StaticVariables.selectedAnnonce);
+        }
 
-
-        ImageView logout=findViewById(R.id.imgLogout);
-        ImageView profil=findViewById(R.id.imgProfile);
-        ImageView home=findViewById(R.id.imgHom);
-        ImageView annonce=findViewById(R.id.imgAnnonce);
-
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                finish();
-
-            }
-        });
-
-
-        profil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    startActivity(new Intent(DetailActivity.this, Parametres.class));
-            }
-        });
-
-
-        annonce.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DetailActivity.this, Annonce.class));
-                startActivity(new Intent(DetailActivity.this, Annonce1.class));
-            }
-        });
-
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DetailActivity.this, HomeActivity.class));
-            }
-        });
-
+        // Your other code for buttons initialization and click listeners...
     }
 
     @SuppressLint("DefaultLocale")
-    private void setVariable(Annonce item){
-        titleTxt.setText(item.getTitre());
-        addressTxt.setText(item.getLocalisation());
-        bedTxt.setText(String.format("%d Bed", item.getNbBed()));
-        bathTxt.setText(String.format("%d Bath", item.getNbBath()));
-        descriptionTxt.setText(item.getDescription());
+    private void setVariable(Annonce item) {
+        if (item != null) {
+            titleTxt.setText(item.getTitre());
+            addressTxt.setText(item.getLocalisation());
+            bedTxt.setText(String.format("%d Bed", item.getNbBed()));
+            bathTxt.setText(String.format("%d Bath", item.getNbBath()));
+            descriptionTxt.setText(item.getDescription());
+            prix.setText(String.format("%.2f DT",item.getPrix()));
+            phone.setText(String.format("Phone: %s",item.getPhone()));
 
-        if(item.isWifi()){
-            wifiTxt.setText("wifi");
-        }else{
-            wifiTxt.setText("No-wifi");
+
+            if(item.isWifi()) {
+                wifiTxt.setText("wifi");
+            } else {
+                wifiTxt.setText("No-wifi");
+            }
+
+            Bitmap imageBitmap = decodeBase64ToBitmap(item.getImageData());
+            pic.setImageBitmap(imageBitmap);
+        } else {
+            // Handle the case where item is null
         }
-
-        Bitmap imageBitmap = decodeBase64ToBitmap(item.getImageData());
-        pic.setImageBitmap(imageBitmap);
     }
-    private void initView(){
-        titleTxt=findViewById(R.id.textView9);
-        addressTxt=findViewById(R.id.textView15);
-        bedTxt=findViewById(R.id.bedTxt);
-        bathTxt=findViewById(R.id.bathTxt);
-        wifiTxt=findViewById(R.id.wifiTxt);
-        descriptionTxt=findViewById(R.id.textView12);
-        pic=findViewById(R.id.pic);
+
+    private void initView() {
+        titleTxt = findViewById(R.id.textView9);
+        addressTxt = findViewById(R.id.textView15);
+        bedTxt = findViewById(R.id.bedTxt);
+        bathTxt = findViewById(R.id.bathTxt);
+        wifiTxt = findViewById(R.id.wifiTxt);
+        descriptionTxt = findViewById(R.id.textView12);
+        pic = findViewById(R.id.pic);
+        prix = findViewById(R.id.prix);
+        phone = findViewById(R.id.phone);
 
     }
 

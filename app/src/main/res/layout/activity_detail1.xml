@@ -24,7 +24,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/pic"
+                    android:id="@+id/imageView"
                     android:layout_width="543dp"
                     android:layout_height="425dp"
                     android:layout_marginEnd="36dp"
@@ -56,7 +56,7 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/titreTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="House with great view"
@@ -67,7 +67,7 @@
                     app:layout_constraintTop_toTopOf="@+id/view" />
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/localisationTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="San Francisco CA, 94110"
@@ -80,24 +80,12 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/prix"
+                android:id="@+id/prixTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="24dp"
                 android:text="$800000"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-
-                />
-            <TextView
-                android:id="@+id/phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
-                android:text="phone"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -229,17 +217,31 @@
 
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/descriptionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
-                android:text="This 2 bed /1 bath home boasts enormous,
-open_living plan, accented by striking
-architectural features and high-end finishes."
+                android:text="T."
                 android:textColor="#000000"
                 android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textView0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Type"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/typeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button"

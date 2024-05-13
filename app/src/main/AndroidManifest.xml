@@ -26,11 +26,16 @@
 
 
 
+
         <activity
             android:name=".Annonce1"
             android:exported="false" />
+
         <activity
             android:name=".Activities.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Annonce.AnnonceDetails"
             android:exported="false" />
         <activity
             android:name=".Parametres"
@@ -63,7 +68,11 @@
         <activity
             android:name=".Annonce.AllAnnoncesActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
     </application>
