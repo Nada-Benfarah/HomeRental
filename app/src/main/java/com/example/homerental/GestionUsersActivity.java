@@ -1,7 +1,9 @@
 package com.example.homerental;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -85,5 +87,9 @@ public class GestionUsersActivity extends AppCompatActivity {
     private void displayErrorMessage(String message) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT);
         snackbar.show();
+    }
+
+    public void onBack(View view) {
+        startActivity(new Intent(this, Admin.class));
     }
 }

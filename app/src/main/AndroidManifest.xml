@@ -19,11 +19,11 @@
 
             android:exported="false" />
         <activity
-
-
             android:name=".GestionUsersActivity"
             android:exported="false" />
-
+        <activity
+        android:name=".StatUsersActivity"
+        android:exported="false" />
 
 
 

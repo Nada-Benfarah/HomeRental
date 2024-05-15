@@ -76,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     FirebaseUser user = fAuth.getCurrentUser();
                                     Toast.makeText(getApplicationContext(), "Account Created", Toast.LENGTH_SHORT).show();
                                     DocumentReference df = fStore.collection("Users").document(user.getUid());
-                                    //update lil les infos mta3 user(mail wil usernam) w zadhom des infos okhrin w hathom fi hashmap jdida
+                                    //update lil les infos mta3 user(mail wil username) w zadhom des infos okhrin w hathom fi hashmap jdida
                                     Map<String,Object> userInfo = new HashMap<>();
                                     userInfo.put("Username",username);
                                     userInfo.put("Email",email);
