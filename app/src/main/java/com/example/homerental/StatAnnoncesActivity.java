@@ -79,6 +79,9 @@ public class StatAnnoncesActivity extends AppCompatActivity {
         PieDataSet dataSet = new PieDataSet(entries, "Statistiques des annonces");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
+        pieChart.setCenterText("Statistiques des annonces");
+        pieChart.setCenterTextSize(18f);
+
         PieData data = new PieData(dataSet);
         pieChart.setData(data);
         pieChart.invalidate(); // refresh

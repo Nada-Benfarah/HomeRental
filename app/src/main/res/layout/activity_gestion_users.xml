@@ -6,22 +6,32 @@
     android:layout_height="match_parent"
     android:background="@drawable/background">
 
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="44dp"
+        android:layout_height="31dp"
+        android:onClick="onBack"
+        app:srcCompat="@drawable/fleche_gauche"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp" />
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="      Gestion des annonces"
+        android:text="Gestion des Utilisateurs"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="29sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintStart_toEndOf="@+id/imageView8"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewUsers"
@@ -32,7 +42,7 @@
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        app:layout_constraintVertical_bias="0.797" />
+        app:layout_constraintVertical_bias="0.544" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
@@ -40,15 +50,5 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent">
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="44dp"
-        android:layout_height="31dp"
-        app:srcCompat="@drawable/fleche_gauche"
-        tools:layout_editor_absoluteX="13dp"
-        tools:layout_editor_absoluteY="91dp"
-        android:onClick="onBack"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
