@@ -127,6 +127,7 @@ public class AnnonceActivity extends AppCompatActivity {
         map.put("nbBed", Integer.parseInt(nbBed.getText().toString()));
         map.put("nbBath", Integer.parseInt(nbBath.getText().toString()));
         map.put("phone", phone.getText().toString());
+        map.put("autorise", false);
 
         if (rbApartment.isChecked()){
             map.put("type","Apartment");

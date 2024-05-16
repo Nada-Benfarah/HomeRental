@@ -31,11 +31,11 @@
 
                 <ImageView
                     android:id="@+id/imageView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="57dp"
+                    android:layout_height="54dp"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="32dp"
-                    android:src="@drawable/user_1"
+                    android:src="@drawable/jasser"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
-                    android:text="Hi, Admin"
+                    android:text="Hi, Jasser"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
                     android:textStyle="bold"

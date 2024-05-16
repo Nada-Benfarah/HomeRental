@@ -19,6 +19,7 @@ public class Annonce implements Parcelable {
     private int nbBath;
 
     private String phone;
+    private boolean autorise;
 
 
 
@@ -183,5 +184,11 @@ public class Annonce implements Parcelable {
         return 0;
     }
 
+    public boolean getAutorise() {
+        return autorise;
+    }
 
+    public void setAutorise(boolean autorise) {
+        this.autorise = autorise;
+    }
 }

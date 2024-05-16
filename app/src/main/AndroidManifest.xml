@@ -13,10 +13,11 @@
         android:theme="@style/Theme.HomeRental"
         tools:targetApi="31">
         <activity
-
-
             android:name=".Annonce.AnnonceActivity"
+            android:exported="false" />
 
+        <activity
+            android:name=".GestionAnnoncesActivity"
             android:exported="false" />
         <activity
             android:name=".GestionUsersActivity"
@@ -24,8 +25,9 @@
         <activity
         android:name=".StatUsersActivity"
         android:exported="false" />
-
-
+        <activity
+            android:name=".StatAnnoncesActivity"
+            android:exported="false" />
 
         <activity
             android:name=".Annonce1"

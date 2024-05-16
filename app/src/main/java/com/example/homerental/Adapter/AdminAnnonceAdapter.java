@@ -1,4 +1,4 @@
-package com.example.homerental.Annonce;
+package com.example.homerental.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,22 +8,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.homerental.Annonce.Annonce;
 import com.example.homerental.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-public class AnnonceAdapter extends ArrayAdapter<Annonce> {
+public class AdminAnnonceAdapter extends ArrayAdapter<Annonce> {
 
-     Context mContext;
-     List<Annonce> mAnnonces;
+    private Context mContext;
+    private List<Annonce> mAnnonces;
 
-    public AnnonceAdapter(Context context, List<Annonce> annonces) {
+    public AdminAnnonceAdapter(Context context, List<Annonce> annonces) {
         super(context, 0, annonces);
         mContext = context;
         mAnnonces = annonces;
@@ -34,7 +38,7 @@ public class AnnonceAdapter extends ArrayAdapter<Annonce> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
         if (listItem == null) {
-            listItem = LayoutInflater.from(mContext).inflate(R.layout.annonce_item, parent, false);
+            listItem = LayoutInflater.from(mContext).inflate(R.layout.admin_annonce_item, parent, false);
         }
 
         Annonce currentAnnonce = mAnnonces.get(position);
@@ -57,12 +61,36 @@ public class AnnonceAdapter extends ArrayAdapter<Annonce> {
         // Load image into ImageView
         ImageView imageView = listItem.findViewById(R.id.imageViewAnnonce);
         Bitmap imageBitmap = decodeBase64ToBitmap(currentAnnonce.getImageData());
-        if (imageBitmap != null) {
+        if (imageBitmap!= null) {
             imageView.setImageBitmap(imageBitmap);
             imageView.setVisibility(View.VISIBLE);
         } else {
             imageView.setVisibility(View.GONE);
         }
+
+        // Ajouter les boutons pour autoriser/refuser l'annonce
+        Button buttonAutoriser = listItem.findViewById(R.id.buttonAutoriser);
+        Button buttonRefuser = listItem.findViewById(R.id.buttonRefuser);
+
+        buttonAutoriser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentAnnonce.setAutorise(true);
+                // Mettre à jour la base de données Firebase avec la nouvelle valeur de autorise
+                DatabaseReference annoncesRef = FirebaseDatabase.getInstance().getReference().child("annonces");
+                annoncesRef.child(currentAnnonce.getId()).child("autorise").setValue(true);
+            }
+        });
+
+        buttonRefuser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentAnnonce.setAutorise(false);
+                // Mettre à jour la base de données Firebase avec la nouvelle valeur de autorise
+                DatabaseReference annoncesRef = FirebaseDatabase.getInstance().getReference().child("annonces");
+                annoncesRef.child(currentAnnonce.getId()).child("autorise").setValue(false);
+            }
+        });
 
         return listItem;
     }

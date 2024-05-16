@@ -24,7 +24,7 @@ import java.util.List;
 
 public class AllAnnoncesActivity extends AppCompatActivity {
 
-    private ListView annoncesListView;
+    ListView annoncesListView;
     private List<Annonce> annoncesList;
     private AnnonceAdapter annonceAdapter;
     private String selectedType = "Tous";
@@ -54,7 +54,9 @@ public class AllAnnoncesActivity extends AppCompatActivity {
                 annoncesList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Annonce annonce = snapshot.getValue(Annonce.class);
-                    annoncesList.add(annonce);
+                    if (annonce.getAutorise()) {
+                        annoncesList.add(annonce);
+                    }
                 }
                 annonceAdapter.notifyDataSetChanged();
             }
@@ -110,7 +112,7 @@ public class AllAnnoncesActivity extends AppCompatActivity {
                 annoncesList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Annonce annonce = snapshot.getValue(Annonce.class);
-                    if (selectedType.equals("Tous") || annonce.getType().equals(selectedType)) {
+                    if (annonce.getAutorise() && (selectedType.equals("Tous") || annonce.getType().equals(selectedType))) {
                         annoncesList.add(annonce);
                     }
                 }
